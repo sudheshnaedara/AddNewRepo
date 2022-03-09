@@ -9,7 +9,7 @@ pipeline {
         }    
         stage('Verify Branch') {
             steps {
-                echo $Git_Branch
+                echo ${Git_Branch}
             }
         }
     }

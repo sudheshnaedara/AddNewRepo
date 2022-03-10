@@ -6,7 +6,15 @@ pipeline {
             steps {
                 echo 'Hello World'
             }
-        }    
+        }  
+     post {
+      success {
+       echo 'Build Success'
+}
+failure {
+
+      echo 'Build failed'
+ }
         stage('Verify Branch') {
             steps {
                 echo Git_Branch

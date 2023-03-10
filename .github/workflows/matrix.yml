@@ -35,9 +35,8 @@ jobs:
     strategy:
       matrix:
         project_value: [ "project1", "project2", "project3", "project4", "project5", "project6", "project7", "project8", "project9", "project10" ]
-      runner_labels: [ "label1" ]
     steps:
       - name: Step 1
-        run: echo "This is step 1 for ${{ matrix.runner_labels }} on project ${{ matrix.project_value }}"
+        run: echo "This is step 1 for  on project ${{ matrix.project_value }}"
       - name: Step 2
-        run: echo "This is step 2 for ${{ matrix.runner_labels }} on project ${{ matrix.project_value }}"
+        run: echo "This is step 2 for on project ${{ matrix.project_value }}"

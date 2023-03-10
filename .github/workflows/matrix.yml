@@ -32,7 +32,6 @@ jobs:
   my-job3:
     runs-on: ubuntu-latest
     continue-on-error: true
-    needs: ${{ if(fromJSON(needs.my-job2.outputs.trigger_my_job3), 'my-job2', '') }}
     strategy:
       matrix:
         project_value: [ "project1", "project2", "project3", "project4", "project5", "project6", "project7", "project8", "project9", "project10" ]

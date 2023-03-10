@@ -27,7 +27,6 @@ jobs:
         run: echo "This is step 2 for project ${{ matrix.project_value }}"
       - name: Trigger my-job3
         run: echo "::set-output name=run_my_job3::true"
-        if: matrix.project_value == 'project1'
         id: trigger_my_job3
 
   my-job3:

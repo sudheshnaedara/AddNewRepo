@@ -1,0 +1,47 @@
+name: My Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  my-job1:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Step 1
+        run: echo "This is step 1"
+      - name: Step 2
+        run: echo "This is step 2"
+
+  my-job2:
+    strategy:
+      matrix:
+        project_value: [ "project1", "project2", "project3", "project4", "project5", "project6", "project7", "project8", "project9", "project10" ]
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    needs: my-job1
+    steps:
+      - name: Step 1
+        run: echo "This is step 1 for project ${{ matrix.project_value }}"
+      - name: Step 2
+        run: echo "This is step 2 for project ${{ matrix.project_value }}"
+      - name: Trigger my-job3
+        run: echo "::set-output name=run_my_job3::true"
+        if: matrix.project_value == 'project1'
+        id: trigger_my_job3
+
+  my-job3:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    needs: ${{ if(fromJSON(needs.my-job2.outputs.trigger_my_job3), 'my-job2', '') }}
+    strategy:
+      matrix:
+        project_value: [ "project1", "project2", "project3", "project4", "project5", "project6", "project7", "project8", "project9", "project10" ]
+      runner_labels: [ "label1" ]
+    steps:
+      - name: Step 1
+        run: echo "This is step 1 for ${{ matrix.runner_labels }} on project ${{ matrix.project_value }}"
+      - name: Step 2
+        run: echo "This is step 2 for ${{ matrix.runner_labels }} on project ${{ matrix.project_value }}"
